@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import ProductCard from "./components/ProductCard";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cartCount, setCartCount] = useState(0);
+
+  const handleAddToCart = (productName) => {
+    setCartCount((prevCount) => prevCount + 1);
+    console.log(`Produto adicionado: ${productName}`);
+  };
+
+  const products = [
+    {
+      id: 1,
+      name: "Smartphone X",
+      price: 2999.0,
+      image: "https://placehold.co/300x200/png?text=Smartphone",
+      isAvailable: true,
+    },
+    {
+      id: 2,
+      name: "Notebook Pro",
+      price: 5499.0,
+      image: "https://placehold.co/300x200/png?text=Notebook",
+      isAvailable: false,
+    },
+    {
+      id: 3,
+      name: "Fone Bluetooth",
+      price: 299.0,
+      image: "https://placehold.co/300x200/png?text=Fone",
+      isAvailable: true,
+    },
+    {
+      id: 4,
+      name: "Monitor Ultra",
+      price: 1200.0,
+      image: "https://placehold.co/300x200/png?text=Monitor",
+      isAvailable: true,
+    },
+  ];
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-container">
+      <header>
+        <h1>Tech Store</h1>
+        <div className="cart-summary">🛒 Carrinho: {cartCount} itens</div>
+      </header>
+
+      <main className="product-list">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            name={product.name}
+            price={product.price}
+            image={product.image}
+            isAvailable={product.isAvailable}
+            onAddToCart={handleAddToCart}
+          />
+        ))}
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
